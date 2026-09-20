@@ -2629,6 +2629,84 @@ client.on(Events.MessageCreate, async message => {
     }
   }
 
+  // Commands help command
+  if (message.content === '!commands-help') {
+    const member = await message.guild.members.fetch(message.author.id);
+    const hasHighStaffRole = member.roles.cache.has(highStaffRoleId);
+    const isAdmin = member.permissions.has(PermissionFlagsBits.Administrator);
+
+    if (!hasHighStaffRole && !isAdmin) {
+      await sendLog(
+        '🚫 ניסיון כניסה לא מורשה',
+        `**משתמש:** <@${userId}>\n**פקודה:** !commands-help\n**ערוץ:** <#${message.channelId}>\n**סיבה:** אין הרשאות`,
+        0xFF0000
+      );
+      return; // No response, just silently ignore
+    }
+
+    try {
+      const commandsEmbed = new EmbedBuilder()
+        .setColor(0x9400D3)
+        .setTitle('📋 **Mythic Zone - מדריך פקודות צוות**')
+        .setDescription('**כל הפקודות הזמינות לצוות השרת**')
+        .addFields(
+          {
+            name: '🎫 **פקודות טיקטים**',
+            value: '`/cleartickets` - מחק את כל הטיקטים\n`📝` פתיחת טיקט דרך התפריט\n`🎯` Claim טיקט\n`➕` הוספת משתמש לטיקט\n`➖` הסרת משתמש מטיקט\n`🔒` סגירת טיקט',
+            inline: false
+          },
+          {
+            name: '⚖️ **פקודות מודרציה**',
+            value: '`/warn [user] [duration] [reason]` - אזהרה\n`/vcmute [user] [duration] [reason]` - השתקה בקול\n`/chmute [user] [duration] [reason]` - השתקה בערוצים\n`!clear [amount]` - מחיקת הודעות (1-100)',
+            inline: false
+          },
+          {
+            name: '📊 **פקודות XP ומערכות**',
+            value: '`/addxp [user] [amount]` - הוסף XP\n`/remxp [user] [amount]` - הסר XP\n`/xpshopsend` - שלח את החנות\n`/setautoroll [role]` - רול אוטומטי',
+            inline: false
+          },
+          {
+            name: '🎉 **פקודות הגרלות**',
+            value: '`/giveaway [prize] [duration] [winners]` - צור הגרלה\n`/endgiveaway [id]` - סיים הגרלה\n`🎊` השתתפות בהגרלה (לחצן)',
+            inline: false
+          },
+          {
+            name: '👥 **פקודות צוות**',
+            value: '`/staffappsend` - שלח טופס הגשה\n`✅` אישור בקשת צוות\n`❌` דחיית בקשת צוות\n`🧪` טיפול בבחינות',
+            inline: false
+          },
+          {
+            name: '🛠️ **פקודות עזר**',
+            value: '`!say [message]` - שלח הודעה כבוט\n`!16` - בחינת גיל 16+\n`!commands-help` - המדריך הזה',
+            inline: false
+          },
+          {
+            name: '🔧 **מערכות אוטומטיות**',
+            value: '• **ספאם:** זיהוי אוטומטי ומחיקה\n• **לוגים:** כל הפעילויות נרשמות\n• **XP:** אוטומטי על הודעות ושיחה\n• **רול אוטומטי:** לחברים חדשים',
+            inline: false
+          }
+        )
+        .setFooter({ 
+          text: `נבקש על ידי ${message.author.username} • Mythic Zone Staff Commands`,
+          iconURL: message.author.displayAvatarURL()
+        })
+        .setTimestamp();
+
+      await message.reply({ embeds: [commandsEmbed] });
+
+      // Log commands help usage
+      await sendLog(
+        '📋 פקודות עזרה',
+        `**משתמש:** <@${userId}>\n**ערוץ:** <#${message.channelId}>`,
+        0x9400D3
+      );
+    } catch (err) {
+      console.error('Failed to send commands help:', err);
+      message.reply('❌ אירעה שגיאה בעת הצגת הפקודות.');
+    }
+    return;
+  }
+
   // Veteran check command
   if (message.content.startsWith('!vt')) {
     if (message.channelId !== VETERAN_CHANNEL_ID) {
