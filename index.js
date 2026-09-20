@@ -1278,7 +1278,7 @@ client.on(Events.InteractionCreate, async interaction => {
     }
 
     if (ticketData.claimed) {
-      await interaction.editReply({ content: `הטיקט כבר נטויל על ידי <@${ticketData.claimedBy}>.` });
+      await interaction.editReply({ content: `הטיקט כבר מטופל על ידי <@${ticketData.claimedBy}>.` });
       return;
     }
 
@@ -1293,7 +1293,7 @@ client.on(Events.InteractionCreate, async interaction => {
         if (message && message.components.length > 0) {
           const newButton = new ButtonBuilder()
             .setCustomId(`ticket_claim_${channelId}`)
-            .setLabel(`נטויל על ידי ${interaction.user.username}`)
+            .setLabel(`מטופל על ידי ${interaction.user.username}`)
             .setStyle('Secondary')
             .setDisabled(true);
 
@@ -1320,12 +1320,12 @@ client.on(Events.InteractionCreate, async interaction => {
       }
     }
 
-    await interaction.editReply({ content: `✅ טיקט נטויל בהצלחה!` });
+    await interaction.editReply({ content: `✅ טיקט מטופל בהצלחה!` });
     
     // Log ticket claim
     await sendLog(
-      '🎯 טיקט נטויל',
-      `**נטויל על ידי:** <@${interaction.user.id}>\n**טיקט:** <#${channelId}>`,
+      '🎯 טיקט מטופל',
+      `**מטופל על ידי:** <@${interaction.user.id}>\n**טיקט:** <#${channelId}>`,
       0xFFFF00
     );
     return;
@@ -1352,7 +1352,7 @@ client.on(Events.InteractionCreate, async interaction => {
     }
 
     if (ticketData.claimed) {
-      await interaction.editReply({ content: `הבחינה כבר נטויל על ידי <@${ticketData.claimedBy}>.` });
+      await interaction.editReply({ content: `הבחינה כבר מטופלת על ידי <@${ticketData.claimedBy}>.` });
       return;
     }
 
@@ -1367,7 +1367,7 @@ client.on(Events.InteractionCreate, async interaction => {
         if (message && message.components.length > 0) {
           const newClaimButton = new ButtonBuilder()
             .setCustomId(`exam_claim_${channelId}`)
-            .setLabel(`נטויל על ידי ${interaction.user.username}`)
+            .setLabel(`מטופל על ידי ${interaction.user.username}`)
             .setStyle('Secondary')
             .setDisabled(true);
 
@@ -1384,12 +1384,12 @@ client.on(Events.InteractionCreate, async interaction => {
       }
     }
 
-    await interaction.editReply({ content: `✅ בחינה נטויל בהצלחה!` });
+    await interaction.editReply({ content: `✅ בחינה מטופלת בהצלחה!` });
     
     // Log exam claim
     await sendLog(
-      '🧪 בחינה נטויל',
-      `**נטויל על ידי:** <@${interaction.user.id}>\n**בחינה:** <#${channelId}>`,
+      '🧪 בחינה מטופלת',
+      `**מטופל על ידי:** <@${interaction.user.id}>\n**בחינה:** <#${channelId}>`,
       0x9400D3
     );
     return;
