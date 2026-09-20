@@ -1,6 +1,6 @@
-# Superme Discord Bot
+# Mythic Zone Discord Bot
 
-A comprehensive Discord bot for the Superme server with advanced features.
+A comprehensive Discord bot for the Mythic Zone server with advanced features.
 
 ## Features
 

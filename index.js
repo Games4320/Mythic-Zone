@@ -44,11 +44,15 @@ const TICKET_CATEGORIES = [
 ];
 
 const SHOP_ROLES = [
-  { roleId: '1541492934258720935', cost: 10000 },
-  { roleId: '1541492934258720936', cost: 15000 },
-  { roleId: '1541492934258720937', cost: 20000 },
-  { roleId: '1541492934258720938', cost: 25000 },
-  { roleId: '1541492934258720939', cost: 30000 }
+  { roleId: '1547929647151579297', cost: 10000 },
+  { roleId: '1547929637982699580', cost: 15000 },
+  { roleId: '1547929636388737066', cost: 20000 },
+  { roleId: '1547929635004620921', cost: 25000 },
+  { roleId: '1547929634266677298', cost: 30000 },
+  { roleId: '1547929634069545051', cost: 35000 },
+  { roleId: '1549016016388890675', cost: 40000 },
+  { roleId: '1548239497580257360', cost: 45000 },
+  { roleId: '1547929633155063848', cost: 50000 }
 ];
 
 const client = new Client({
@@ -369,7 +373,7 @@ client.once(Events.ClientReady, async () => {
 
       const embed = new EmbedBuilder()
         .setColor(0xFF6B00)
-        .setTitle('# Superme Xp shop');
+        .setTitle('# Mythic Zone Xp shop');
 
       let shopText = '**תבחרו את הרול שבא לכם, ותקנו אותו!**\n\n';
       for (let i = 0; i < SHOP_ROLES.length; i++) {
@@ -414,7 +418,7 @@ client.once(Events.ClientReady, async () => {
     if (ticketChannel) {
       const messages = await ticketChannel.messages.fetch({ limit: 5 });
       for (const message of messages.values()) {
-        if (message.author.id === client.user.id && message.embeds.length > 0 && message.embeds[0].title === 'Superme Ticket System') {
+        if (message.author.id === client.user.id && message.embeds.length > 0 && message.embeds[0].title === 'Mythic Zone Ticket System') {
           await message.delete().catch(() => {});
         }
       }
@@ -440,7 +444,7 @@ client.once(Events.ClientReady, async () => {
 
       const embed = new EmbedBuilder()
         .setColor(0x0099FF)
-        .setTitle('Superme Ticket System')
+        .setTitle('Mythic Zone Ticket System')
         .setDescription('בחר קטגוריה כדי לפתוח טיקט');
 
       const ticketMenu = new StringSelectMenuBuilder()
@@ -542,7 +546,7 @@ client.on(Events.InteractionCreate, async interaction => {
 
           const embed = new EmbedBuilder()
             .setColor(0xFF6B00)
-            .setTitle('# Superme Xp shop');
+            .setTitle('# Mythic Zone Xp shop');
 
           let shopText = '**תבחרו את הרול שבא לכם, ותקנו אותו!**\n\n';
           for (let i = 0; i < SHOP_ROLES.length; i++) {
@@ -1127,16 +1131,13 @@ client.on(Events.InteractionCreate, async interaction => {
 
         const row = new ActionRowBuilder().addComponents(claimButton, addButton, removeButton, closeButton);
 
-        let mentionText = '';
-        if (staffRole) mentionText += `${staffRole} `;
-        if (highStaffRole) mentionText += `${highStaffRole} `;
-        mentionText += `<@${userId}>`;
+        let mentionText = `<@&${staffRoleId}> <@&${highStaffRoleId}> <@${userId}>`;
 
         await ticketChannel.send({ 
           embeds: [embed], 
           components: [row], 
           content: mentionText,
-          allowedMentions: { parse: ['users', 'roles'], repliedUser: false }
+          allowedMentions: { parse: ['users', 'roles'] }
         });
 
         openTickets.set(ticketChannel.id, {
@@ -1815,7 +1816,7 @@ client.on(Events.InteractionCreate, async interaction => {
             new EmbedBuilder()
               .setColor(0x00FF00)
               .setTitle('✅ בקשתך לצוות אושרה!')
-              .setDescription(`ברוכים הבאים לצוות Superme!\nתקבלת את ה Staff Role.`)
+              .setDescription(`ברוכים הבאים לצוות Mythic Zone!\nתקבלת את ה Staff Role.`)
               .setTimestamp()
           ]
         });

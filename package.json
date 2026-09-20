@@ -1,7 +1,7 @@
 {
-  "name": "superme-official-bot",
+  "name": "mythic-zone-official-bot",
   "version": "1.0.0",
-  "description": "Discord bot for SuperME server with comprehensive features",
+  "description": "Discord bot for Mythic Zone server with comprehensive features",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
