@@ -2692,17 +2692,30 @@ client.on(Events.MessageCreate, async message => {
         })
         .setTimestamp();
 
-      await message.reply({ embeds: [commandsEmbed] });
+      // Send DM to user privately
+      await message.author.send({ embeds: [commandsEmbed] });
+      
+      // Delete the original command message
+      await message.delete().catch(() => {});
 
       // Log commands help usage
       await sendLog(
         '📋 פקודות עזרה',
-        `**משתמש:** <@${userId}>\n**ערוץ:** <#${message.channelId}>`,
+        `**משתמש:** <@${userId}>\n**נשלח ב-DM פרטי**`,
         0x9400D3
       );
     } catch (err) {
-      console.error('Failed to send commands help:', err);
-      message.reply('❌ אירעה שגיאה בעת הצגת הפקודות.');
+      console.error('Failed to send commands help DM:', err);
+      // If DM fails, send a temporary message in channel
+      const tempMsg = await message.reply('❌ לא הצלחתי לשלוח לך DM. בדוק שה-DMs פתוחים.');
+      setTimeout(async () => {
+        try {
+          await tempMsg.delete();
+          await message.delete();
+        } catch (err) {
+          console.error('Failed to delete temp messages:', err);
+        }
+      }, 5000);
     }
     return;
   }
