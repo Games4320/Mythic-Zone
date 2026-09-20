@@ -16,22 +16,22 @@ if (process.env.TOKEN) {
   highStaffRoleId = config.highStaffRoleId;
 }
 
-const HELP_CHANNEL_ID = '1550239568551485530';
-const XP_CHECK_CHANNEL_ID = '1550377572158804088';
-const XP_SHOP_CHANNEL_ID = '1550456007015010427';
-const TICKET_SETUP_CHANNEL_ID = '1549855124237590690';
-const VETERAN_CHANNEL_ID = '1541492936724971558';
-const LOGS_CHANNEL_ID = '1541492941795889301';
-const AGE_CHECK_ROLE_ID = '1550414404531654727';
-const STAFF_APP_CHANNEL_ID = '1550459563730276453';
+const HELP_CHANNEL_ID = '1547583686889967718';
+const XP_CHECK_CHANNEL_ID = '1551199492940898324';
+const XP_SHOP_CHANNEL_ID = '1547947504371240970';
+const TICKET_SETUP_CHANNEL_ID = '1547644257446273125';
+const VETERAN_CHANNEL_ID = '1547636709318070302';
+const LOGS_CHANNEL_ID = '1550753218261291149';
+const AGE_CHECK_ROLE_ID = '1551153489751842836';
+const STAFF_APP_CHANNEL_ID = '1551201029243142214';
 const COOLDOWN_DURATION = 30 * 1000;
 const XP_PER_MESSAGE = 2;
 const XP_PER_VOICE_MINUTE = 4;
 const VOICE_XP_INTERVAL = 60000;
 const VETERAN_DAYS = 85;
 
-const MANAGEMENT_ROLE_ID = '1541492934405398528';
-const SPECIALIST_ROLE_ID = '1541492934376165400';
+const MANAGEMENT_ROLE_ID = '1550852067617407086';
+const SPECIALIST_ROLE_ID = '1551201198965657610';
 
 // Ticket categories
 const TICKET_CATEGORIES = [
@@ -78,7 +78,7 @@ let autoRoleId = null; // Store the auto-role ID
 
 const SPAM_THRESHOLD = 5; // 5 messages
 const SPAM_TIME_WINDOW = 5000; // in 5 seconds
-const MANAGER_ROLE_ID = '1541492934405398535';
+const MANAGER_ROLE_ID = '1550852067617407086';
 
 // Helper function to send logs
 async function sendLog(title, description, color = 0x0099FF) {
@@ -2436,11 +2436,7 @@ client.on(Events.MessageCreate, async message => {
     try {
       const embed = new EmbedBuilder()
         .setColor(0xFF6B00)
-        .setTitle('בקשת עזרה חדשה')
-        .addFields(
-          { name: 'סיבה:', value: reason, inline: true },
-          { name: 'שיחה:', value: voiceChannelLink, inline: true }
-        );
+        .setDescription(`<@&${staffRoleId}>, <@&${highStaffRoleId}>, <@${userId}> צריך את עזרתכם!\n\n${message.member.voice.channel ? `🔊 **בשיחה:** https://discord.com/channels/${message.guildId}/${message.member.voice.channelId}` : '🔇 **לא בשיחה קולית**'}\n\n**סיבה:** \`${reason}\``);
 
       const claimButton = new ButtonBuilder()
         .setCustomId(`help_claim_${message.id}`)
@@ -2451,7 +2447,7 @@ client.on(Events.MessageCreate, async message => {
 
       const helpMsg = await message.channel.send({
         embeds: [embed],
-        content: `<@&${staffRoleId}> <@&${highStaffRoleId}> <@${userId}>`,
+        content: ``,
         components: [row],
         allowedMentions: { parse: ['roles', 'users'] }
       });
