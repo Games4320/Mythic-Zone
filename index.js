@@ -55,10 +55,8 @@ const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildMembers,
     GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildVoiceStates,
-    GatewayIntentBits.DirectMessages
+    GatewayIntentBits.GuildVoiceStates
   ]
 });
 
@@ -2681,9 +2679,15 @@ client.on(Events.MessageCreate, async message => {
         return message.reply('❌ לא מצאתי את הרול הנדרש.');
       }
 
-      // Get all members with the role
-      const members = await guild.members.fetch();
-      const membersWithRole = members.filter(m => m.roles.cache.has(AGE_CHECK_ROLE_ID));
+      // Get all members with the role - only fetch members with the specific role
+      const roleToCheck = await guild.roles.fetch(AGE_CHECK_ROLE_ID).catch(() => null);
+      
+      if (!roleToCheck) {
+        return message.reply('❌ לא מצאתי את הרול הנדרש.');
+      }
+
+      // Try to get members with the role without fetching all guild members
+      const membersWithRole = roleToCheck.members;
 
       if (membersWithRole.size === 0) {
         return message.reply('❌ אין מישהו עם הרול הזה.');

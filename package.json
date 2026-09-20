@@ -1,13 +1,21 @@
 {
   "name": "superme-official-bot",
   "version": "1.0.0",
-  "description": "Discord bot for SuperME server with help system",
+  "description": "Discord bot for SuperME server with comprehensive features",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["discord", "bot", "discord.js", "moderation"],
+  "author": "Games4320",
+  "license": "MIT",
   "type": "commonjs",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
   "dependencies": {
     "discord.js": "^14.27.0"
   }
